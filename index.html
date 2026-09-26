@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Mental Simulation for Vision-Language Models on Intuitive Physics. Anonymous project page with video results and VLM evaluations.">
+<meta name="referrer" content="no-referrer">
+<title>Mental Simulation for Vision-Language Models on Intuitive Physics</title>
+<link rel="icon" href="assets/favicon.svg?v=18" type="image/svg+xml">
+<link rel="stylesheet" href="styles.css?v=18"><script src="data.js?v=18" defer></script><script src="app.js?v=18" defer></script><script src="curated-examples.js?v=18" defer></script><script src="curated-ui.js?v=18" defer></script>
+</head>
+<body>
+<a class="skip" href="#abstract">Skip to content</a>
+<main>
+<header class="paper-header content">
+<h1>Mental Simulation for Vision-Language Models on Intuitive Physics</h1>
+<p class="authors">Anonymous Authors</p>
+<nav aria-label="Page sections"><a href="#method">Method</a><a href="#vlm-results">Quantitative results</a><a href="#video-results">Video results</a></nav>
+</header>
+<section class="content opening" aria-label="Overview">
+<figure><video id="teaser-video" class="teaser-video" width="3156" height="1304" muted playsinline preload="metadata" poster="assets/teaser-poster.webp" aria-label="Animated overview: observed domino motion, language reasoning, and imagined futures leading to the final prediction." aria-describedby="teaser-caption"><source src="assets/teaser.mp4" type="video/mp4"><a href="assets/teaser.mp4">Watch the animated overview</a></video>
+<div class="teaser-controls"><button id="teaser-replay" type="button" aria-controls="teaser-video">Replay</button></div>
+<figcaption id="teaser-caption"><strong>Mental simulation for future-aware reasoning.</strong> Given an observed video, we generate plausible future continuations and use them as additional visual evidence for a vision-language model. This example illustrates how an imagined future can change the answer to a physical prediction question.</figcaption></figure>
+</section>
+<section class="text-section" id="abstract"><h2>Abstract</h2><p>Vision-language models (VLMs) excel at interpreting what is visible, but can still struggle when questions depend on events that have not yet occurred. Such future-dependent questions are central to understanding the physical world, yet they require reasoning about plausible dynamics that are often absent from static or partially observed inputs. We propose a test-time approach that improves VLMs’ ability to reason about the future. Rather than relying only on a VLM’s internal text-based reasoning to extrapolate future dynamics, we augment it using a generative video model to explicitly generate multiple plausible future rollouts conditioned on the observed video. These “mental simulations” are then fed back to the VLM as additional visual context before it produces a final answer. We evaluate this simulate-then-reason framework on three intuitive physics benchmarks: Physion, CLEVRER, and real-world Physics-IQ videos. Across a diverse set of open-source and proprietary VLMs, augmenting models with imagined futures can improve prediction accuracy over both observed-only baselines and strong test-time language reasoning baselines, suggesting that allocating test-time computation to explicit video-based mental simulation can enhance multimodal reasoning about the physical world.</p></section>
+<section class="content section" id="method"><h2>Method Overview</h2>
+<p>Questions about future physical events require reasoning beyond the observed frames. We use a generative video model to sample three plausible continuations conditioned on the observed video, then provide them to a VLM together with the question.</p>
+<figure><a href="assets/method.png?v=18" target="_blank" rel="noopener" aria-label="Open method figure at full resolution"><img src="assets/method.png?v=18" width="2000" height="470" loading="lazy" alt="A video generator samples three imagined futures. The VLM either reasons independently over each and aggregates predictions, or reasons jointly over all three."></a>
+<figcaption><strong>Two ways to reason over imagined futures.</strong> <em>Visual–Independent</em> answers from each rollout separately and aggregates the predictions. <em>Visual–Joint</em> considers all three imagined futures together and produces one answer. The observed segment conditions the generator in both settings.</figcaption></figure>
+</section>
+<section class="content section" id="vlm-results"><h2>Quantitative Results</h2>
+<p>We compare observed-only inference, language-space reasoning, and visual mental simulation across eleven VLM configurations. The main evaluation contains 1,035 Physion, 1,000 CLEVRER, and 66 Physics-IQ questions.</p>
+<div class="benchmark-tabs" id="result-datasets" role="group" aria-label="Benchmark"></div>
+<div class="model-tabs" id="result-models" role="group" aria-label="Model"></div>
+<figure class="result-figure"><div class="plot-scroll" tabindex="0" aria-label="Accuracy chart; scroll horizontally on small screens"><div id="result-plot"></div></div><div id="chart-tooltip" class="chart-tooltip" hidden></div></figure>
+<details class="protocol"><summary>Inference settings and evaluation details</summary><dl><dt>Observed / Observed vote@3</dt><dd><em>Observed</em> predicts the answer directly from the observed segment V<sub>0:T</sub>. As a repeated-inference control, <em>Observed vote@3</em> runs the same inference three times and aggregates the resulting predictions by majority vote.</dd><dt>Language–Structured / Language–Future</dt><dd>The VLM still receives only the observed video and is prompted to reason about the scene before answering; the standard prompts request only the final answer. <em>Language–Structured</em> organizes the observed scene in terms of relevant objects, motions, and interactions. <em>Language–Future</em> asks the model to simulate how these dynamics may evolve. We evaluate both settings with a single inference and with <em>vote@3</em>.</dd><dt>Visual–Independent / Visual–Joint</dt><dd>We generate K = 3 imagined future rollouts and provide them as additional visual evidence. In <em>Visual–Independent</em>, the VLM reasons over each rollout separately and aggregates the three predictions by majority vote. In <em>Visual–Joint</em>, the VLM reasons jointly over all three imagined futures and produces a single answer.</dd></dl></details>
+
+</section>
+<section class="content section" id="video-results"><h2>Video Results</h2>
+<section class="curated-panel" id="reasoning-examples"><h3>Reasoning with Imagined Futures</h3>
+</section>
+<section class="curated-panel" id="generator-examples"><h3>Video Quality and Model Answers</h3>
+</section>
+<noscript><p>Enable JavaScript to browse video examples and compare model predictions.</p></noscript>
+</section>
+</main>
+<footer class="content"><p>Mental Simulation for Vision-Language Models on Intuitive Physics · Anonymous Authors</p></footer>
+</body></html>
